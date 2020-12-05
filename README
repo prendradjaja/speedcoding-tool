@@ -11,24 +11,19 @@ v0:
   usage:
   python3 tool.py program.py
 
-v0.1:
-x watch
-. color
-. import xpf
-
 v1:
-+ x watch for changes
+  x watch for changes
 
   / parse
     x add xpf() calls
     x associate each with the line it came from
-+   . import xpf
-+   . handle blocks
+    . import xpf
+    . handle blocks
 
   x run subprocess
     x listen for xpf output
-+   . can handle long-running program, gives live updates
+    . can handle long-running program, gives live updates
 
-+ . color values
-
-+ . display code and xpf output with curses etc?
+  . color values
+  x exception handling
+  . display code and xpf output with curses etc?

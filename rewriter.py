@@ -14,6 +14,8 @@ def rewrite(path):
             node.value, call_id = _wrap(oldval)
             line_numbers[call_id] = node.lineno
 
+    module.body.insert(0, _make_import_node())
+
     code = compile(tree, path, 'exec')
 
     return code, line_numbers
@@ -52,3 +54,15 @@ def _wrap(oldval):
         end_col_offset = -1,
     )
     return newval, call_id
+
+def _make_import_node():
+    return ast.ImportFrom(
+        module='xpf',
+        names=[
+            ast.alias(name='xpf', asname=None),
+        ],
+        lineno = -1,
+        col_offset = -1,
+        end_lineno = -1,
+        end_col_offset = -1,
+    )

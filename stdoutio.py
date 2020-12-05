@@ -10,13 +10,13 @@ def stdoutIO(stdout=None):
     if stdout is None:
         stdout = StringIO()
     sys.stdout = stdout
-    yield stdout
+    yield (stdout, old)
     sys.stdout = old
 
-code = """
-i = [0,1,2]
-for j in i :
-    print(j)
-"""
-with stdoutIO() as s:
-    exec(code)
+# code = """
+# i = [0,1,2]
+# for j in i :
+#     print(j)
+# """
+# with stdoutIO() as s:
+#     exec(code)
