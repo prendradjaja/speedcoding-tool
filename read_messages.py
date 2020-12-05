@@ -8,10 +8,13 @@ def execute(cmd):
     messages = []
     for line in iter(popen.stdout.readline, ""):
         line = line.strip()
-        if line.startswith('XPF('):
+        if is_xpf(line):
             messages.append(parse_xpf(line))
     popen.stdout.close()
     print(messages)
+
+def is_xpf(line):
+    return line.startswith('XPF(')
 
 def parse_xpf(line):
     # Parse a line like:
@@ -30,6 +33,7 @@ def parse_xpf(line):
             .replace('XPF(', DELIMITER)
             .replace(') ', DELIMITER)
             .split(DELIMITER))
-    return Message(call_id, value)
+    return Message(int(call_id), value)
 
-execute(["python3", "-u", "annotated.py"])
+if __name__ == '__main__':
+    execute(["python3", "-u", "annotated.py"])

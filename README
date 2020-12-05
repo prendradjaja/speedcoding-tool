@@ -1,12 +1,12 @@
 v0:
-  . parse
-    / add xpf() calls
-    . associate each with the line it came from
+  x parse
+    x add xpf() calls
+    x associate each with the line it came from
 
-  . run subprocess
-    / listen for xpf output
+  x run subprocess
+    x listen for xpf output
 
-  . display code and xpf output with vanilla python
+  x display code and xpf output with vanilla python
 
   usage:
   python3 tool.py program.py
@@ -14,12 +14,15 @@ v0:
 v1:
 + . watch for changes
 
-  . parse
-    . add xpf() calls
-    . associate each with the line it came from
+  / parse
+    x add xpf() calls
+    x associate each with the line it came from
++   . import xpf
 
-  . run subprocess
-    . listen for xpf output
+  x run subprocess
+    x listen for xpf output
 +   . can handle long-running program, gives live updates
 
-+ display code and xpf output with curses etc?
+  . color values
+
++ . display code and xpf output with curses etc?
