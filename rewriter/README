@@ -1,0 +1,4 @@
+https://greentreesnakes.readthedocs.io/en/latest/index.html
+https://greentreesnakes.readthedocs.io/en/latest/tofrom.html
+
+astor may not be needed actually -- but probably handy during development bc apparently its AST-printing is nicer than builtin
