@@ -1,0 +1,10 @@
+watch for changes
+
+parse
+- add xpf() calls
+- associate each with the line it came from
+
+run subprocess. listen for xpf output
+
+print original code
+display xpf output on top of original code
