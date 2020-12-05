@@ -1,5 +1,7 @@
 import subprocess
 
+# From https://stackoverflow.com/questions/4417546/constantly-print-subprocess-output-while-process-is-running
+
 def execute(cmd):
     popen = subprocess.Popen(cmd, stdout=subprocess.PIPE, universal_newlines=True)
     for stdout_line in iter(popen.stdout.readline, ""):

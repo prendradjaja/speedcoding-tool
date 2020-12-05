@@ -1,10 +1,25 @@
-watch for changes
+v0:
+  . parse
+    / add xpf() calls
+    . associate each with the line it came from
 
-parse
-- add xpf() calls
-- associate each with the line it came from
+  . run subprocess
+    / listen for xpf output
 
-run subprocess. listen for xpf output
+  . display code and xpf output with vanilla python
 
-print original code
-display xpf output on top of original code
+  usage:
+  python3 tool.py program.py
+
+v1:
++ . watch for changes
+
+  . parse
+    . add xpf() calls
+    . associate each with the line it came from
+
+  . run subprocess
+    . listen for xpf output
++   . can handle long-running program, gives live updates
+
++ display code and xpf output with curses etc?
