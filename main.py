@@ -63,7 +63,7 @@ def run_and_display(path):
     os.system('clear')
     for i, line in enumerate(open(path), 1):
         line = line.rstrip()
-        print(line[:WIDTH-4].ljust(WIDTH), end='')
+        print(line[:WIDTH-4].ljust(WIDTH), end='|')
         if i in values:
             print(str(values[i])[:30], end='')
         print()
