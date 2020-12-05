@@ -1,2 +1,11 @@
-x = [int(x) for x in open('in').read().splitlines()]
-6
+def foo():
+    x = bar()
+
+def bar():
+    def baz():
+        z = 2
+        return z
+    y = baz()
+    return 4
+
+foo()

@@ -4,19 +4,27 @@ import astor
 
 line_numbers = {}
 
-def rewrite(path):
+def rewrite(path, shouldcompile=True):  # TODO shouldcompile is prob a hack, move responsibility for compilation to caller?
     tree = astor.parse_file(path)
     module = tree
-
-    for node in module.body:
-        if isinstance(node, ast.Assign) or isinstance(node, ast.Expr):
-            _wrap(node)
+    traverse(module.body)
 
     module.body.insert(0, _make_import_node())
-
-    code = compile(tree, path, 'exec')
-
+    if shouldcompile:
+        code = compile(tree, path, 'exec')
+    else:
+        code = tree
     return code, line_numbers
+
+def traverse(nodelist):
+    for node in nodelist:
+        if isinstance(node, (ast.Assign, ast.Expr)):
+            _wrap(node)
+        elif isinstance(node, (ast.For, ast.While, ast.FunctionDef)):
+            traverse(node.body)
+        elif isinstance(node, (ast.If)):
+            traverse(node.body)
+            traverse(node.orelse)
 
 def _getid():
     _getid.i += 1
@@ -41,7 +49,7 @@ def _wrap(node):
             ast.Constant(
                 value = call_id,
                 kind = None,
-                lineno = -1,
+                lineno = -1,  # TODO DRY out these linenos
                 col_offset = -1,
                 end_lineno = -1,
                 end_col_offset = -1,
@@ -61,6 +69,7 @@ def _make_import_node():
         names=[
             ast.alias(name='xpf', asname=None),
         ],
+        level=0,
         lineno = -1,
         col_offset = -1,
         end_lineno = -1,

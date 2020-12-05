@@ -43,7 +43,7 @@ def run_and_display(path):
 
     with stdoutIO() as spair:
         try:  # Catch runtime errors
-            exec(code)
+            exec(code, {})
         except Exception as e:
             real = spair[1]
             print(e, file=real)

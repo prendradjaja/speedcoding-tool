@@ -10,7 +10,7 @@ def stdoutIO(stdout=None):
     if stdout is None:
         stdout = StringIO()
     sys.stdout = stdout
-    yield (stdout, old)
+    yield (stdout, old)  # TODO this tuple is maybe a hack, can i clean it up (or at least rename stuff in the caller)
     sys.stdout = old
 
 # code = """
