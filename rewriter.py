@@ -2,17 +2,15 @@ import sys
 import ast
 import astor
 
+line_numbers = {}
+
 def rewrite(path):
     tree = astor.parse_file(path)
     module = tree
 
-    line_numbers = {}
-
     for node in module.body:
         if isinstance(node, ast.Assign) or isinstance(node, ast.Expr):
-            oldval = node.value
-            node.value, call_id = _wrap(oldval)
-            line_numbers[call_id] = node.lineno
+            _wrap(node)
 
     module.body.insert(0, _make_import_node())
 
@@ -26,8 +24,10 @@ def _getid():
 _getid.i = -1
 
 
-def _wrap(oldval):
+def _wrap(node):
+    oldval = node.value
     call_id = _getid()
+    line_numbers[call_id] = node.lineno
     newval = ast.Call(
         func = ast.Name(id = 'xpf',
             ctx = ast.Load(),
@@ -53,7 +53,7 @@ def _wrap(oldval):
         end_lineno = -1,
         end_col_offset = -1,
     )
-    return newval, call_id
+    node.value = newval
 
 def _make_import_node():
     return ast.ImportFrom(
