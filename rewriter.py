@@ -9,7 +9,7 @@ def rewrite(path):
     line_numbers = {}
 
     for node in module.body:
-        if isinstance(node, ast.Assign):
+        if isinstance(node, ast.Assign) or isinstance(node, ast.Expr):
             oldval = node.value
             node.value, call_id = _wrap(oldval)
             line_numbers[call_id] = node.lineno
