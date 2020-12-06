@@ -27,3 +27,11 @@ v1:
   . color values
   x exception handling
   . display code and xpf output with curses etc?
+
+  . make usable for Advent of Code
+    . approach 1: continue using current 'exec' approach
+      . sys.path.insert(0, os.getcwd()) -- to get 'import grid' to work
+      . change sys.argv
+      . get ifmain to work
+      . ...?
+    . approach 2: use a subprocess

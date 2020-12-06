@@ -9,7 +9,6 @@ from rewriter import rewrite
 from stdoutio import stdoutIO
 from read_messages import is_xpf, parse_xpf
 
-
 class Handler(FileSystemEventHandler):
     def __init__(self, path):
         self.path = path
@@ -20,7 +19,12 @@ class Handler(FileSystemEventHandler):
             run_and_display(self.path)
 
 def main():
+    # TODO rename to avoid confusion -- path here != sys.path
     path = sys.argv[1]
+
+    sys.path.insert(0, os.getcwd())
+    sys.argv = []
+
     run_and_display(path)
 
     event_handler = Handler(path)
@@ -58,14 +62,18 @@ def run_and_display(path):
             lineno = line_numbers[message.call_id]
             values[lineno] = message.value
 
-    WIDTH = 40
+    LWIDTH = 35
+    RWIDTH = 35
 
     os.system('clear')
     for i, line in enumerate(open(path), 1):
         line = line.rstrip()
-        print(line[:WIDTH-4].ljust(WIDTH), end='|')
+        print(line[:LWIDTH].ljust(LWIDTH), end=' | ')
         if i in values:
-            print(str(values[i])[:30], end='')
+            value = values[i]
+        else:
+            value = ''
+        print(str(value)[:RWIDTH].ljust(RWIDTH), end=' |')
         print()
 
 if __name__ == '__main__':
