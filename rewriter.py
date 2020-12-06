@@ -21,6 +21,8 @@ def traverse(nodelist):
         if isinstance(node, (ast.Assign, ast.Expr, ast.Return, ast.AugAssign)):
             _wrap(node)
         elif isinstance(node, (ast.For, ast.While, ast.FunctionDef)):
+            if isinstance(node, ast.For):
+                _wrap(node, 'iter')
             traverse(node.body)
         elif isinstance(node, (ast.If)):
             traverse(node.body)
@@ -32,8 +34,8 @@ def _getid():
 _getid.i = -1
 
 
-def _wrap(node):
-    oldval = node.value
+def _wrap(node, attr='value'):
+    oldval = getattr(node, attr)
     call_id = _getid()
     line_numbers[call_id] = node.lineno
     newval = ast.Call(
@@ -61,7 +63,7 @@ def _wrap(node):
         end_lineno = -1,
         end_col_offset = -1,
     )
-    node.value = newval
+    setattr(node, attr, newval)
 
 def _make_import_node():
     return ast.ImportFrom(
