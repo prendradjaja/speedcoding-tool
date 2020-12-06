@@ -18,7 +18,7 @@ def rewrite(path, shouldcompile=True):  # TODO shouldcompile is prob a hack, mov
 
 def traverse(nodelist):
     for node in nodelist:
-        if isinstance(node, (ast.Assign, ast.Expr)):
+        if isinstance(node, (ast.Assign, ast.Expr, ast.Return, ast.AugAssign)):
             _wrap(node)
         elif isinstance(node, (ast.For, ast.While, ast.FunctionDef)):
             traverse(node.body)
