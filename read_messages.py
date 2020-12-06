@@ -31,7 +31,7 @@ def parse_xpf(line):
     _, call_id, value = (
         line
             .replace('XPF(', DELIMITER)
-            .replace(') ', DELIMITER)
+            .replace(')XPF ', DELIMITER)
             .split(DELIMITER))
     return Message(int(call_id), value)
 
