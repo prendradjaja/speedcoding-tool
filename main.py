@@ -40,7 +40,7 @@ def main():
 
 def run_and_display(path):
     try:  # Catch rewrite-time errors (i.e. syntax errors)
-        code, line_numbers = rewrite(path)
+        code, line_numbers, nines = rewrite(path)
     except Exception as e:
         print(e)
         return
@@ -62,12 +62,18 @@ def run_and_display(path):
             lineno = line_numbers[message.call_id]
             values[lineno] = message.value
 
-    LWIDTH = 35
-    RWIDTH = 35
+    LWIDTH = 25
+    RWIDTH = 45
+    HEIGHT = 39
 
     os.system('clear')
-    for i, line in enumerate(open(path), 1):
-        line = line.rstrip()
+    lines = open(path).read().splitlines()
+    lines.extend([''] * HEIGHT)  # Add blank lines to the bottom so that the ------- is always at HEIGHT
+    if nines:
+        start = max(nines[0] - HEIGHT // 2, 0)
+    else:
+        start = 0
+    for i, line in enumerate(lines[start:], 1 + start):
         print(line[:LWIDTH].ljust(LWIDTH), end=' | ')
         if i in values:
             value = values[i]
@@ -75,6 +81,9 @@ def run_and_display(path):
             value = ''
         print(str(value)[:RWIDTH].ljust(RWIDTH), end=' |')
         print()
+        if i - start >= HEIGHT:
+            break
+    print('-' * (LWIDTH + RWIDTH + 5))
 
 if __name__ == '__main__':
     main()

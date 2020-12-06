@@ -3,10 +3,12 @@ import ast
 import astor
 
 line_numbers = {}
+nines = []
 
 def rewrite(path, shouldcompile=True):  # TODO shouldcompile is prob a hack, move responsibility for compilation to caller?
     tree = astor.parse_file(path)
     module = tree
+    nines[:] = []
     traverse(module.body)
 
     module.body.insert(0, _make_import_node())
@@ -14,11 +16,12 @@ def rewrite(path, shouldcompile=True):  # TODO shouldcompile is prob a hack, mov
         code = compile(tree, path, 'exec')
     else:
         code = tree
-    return code, line_numbers
+    return code, line_numbers, nines
 
 def traverse(nodelist):
     for node in nodelist:
         if isinstance(node, (ast.Assign, ast.Expr, ast.Return, ast.AugAssign)):
+            checknines(node)
             _wrap(node)
         elif isinstance(node, (ast.For, ast.While, ast.FunctionDef)):
             if isinstance(node, ast.For):
@@ -27,6 +30,14 @@ def traverse(nodelist):
         elif isinstance(node, (ast.If)):
             traverse(node.body)
             traverse(node.orelse)
+
+def checknines(node):
+    if (
+        isinstance(node, ast.Expr)
+        and isinstance(node.value, ast.Constant)
+        and node.value.value == 99
+    ):
+        nines.append(node.lineno)
 
 def _getid():
     _getid.i += 1
