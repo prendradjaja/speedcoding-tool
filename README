@@ -1,0 +1,37 @@
+v0:
+  x parse
+    x add xpf() calls
+    x associate each with the line it came from
+
+  x run subprocess
+    x listen for xpf output
+
+  x display code and xpf output with vanilla python
+
+  usage:
+  python3 tool.py program.py
+
+v1:
+  x watch for changes
+
+  / parse
+    x add xpf() calls
+    x associate each with the line it came from
+    . import xpf
+    . handle blocks
+
+  x run subprocess
+    x listen for xpf output
+    . can handle long-running program, gives live updates
+
+  . color values
+  x exception handling
+  . display code and xpf output with curses etc?
+
+  . make usable for Advent of Code
+    . approach 1: continue using current 'exec' approach
+      . sys.path.insert(0, os.getcwd()) -- to get 'import grid' to work
+      . change sys.argv
+      . get ifmain to work
+      . ...?
+    . approach 2: use a subprocess
