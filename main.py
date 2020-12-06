@@ -64,7 +64,7 @@ def run_and_display(path):
 
     LWIDTH = 25
     RWIDTH = 45
-    HEIGHT = 25
+    HEIGHT = 39
 
     os.system('clear')
     lines = open(path).read().splitlines()
