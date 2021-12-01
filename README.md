@@ -1,3 +1,7 @@
+# Live-preview speedcoding tool for Python (prototype)
+
+<img src="./demo.gif" width="500">
+
 Yep, someone created this already:
 https://github.com/donkirkby/live-py-plugin
 
