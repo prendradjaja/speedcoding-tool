@@ -2,7 +2,7 @@
 
 <img src="./demo.gif" width="500">
 
-Yep, someone created this already:
+Oops, turns out someone created this already:
 https://github.com/donkirkby/live-py-plugin
 
 Vim support?
